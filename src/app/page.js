@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 
 
 
-const projectId = '66b0747b001cea147dd4';
+const projectId =NEXT_PUBLIC_PROJECT_ID;
 
 
 // Initialize Appwrite client and account
