@@ -1,0 +1,49 @@
+.create-member-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-heading {
+    color: #000;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.create-member-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-member-form .form-group {
+    margin-bottom: 15px;
+}
+
+.create-member-form .required-badge {
+    color: red;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.create-member-form .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.create-member-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+.create-member-form .btn-primary {
+    background-color: #ffc107;
+    border: none;
+}
+
+.create-member-form .btn-primary:disabled {
+    background-color: #e0a800;
+}
