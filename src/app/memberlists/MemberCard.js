@@ -67,8 +67,9 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete , serialNumber }) => {
       {isOpen && (
    
 
-    <Card
-      width='80vw'
+    <Card 
+      flexWrap='wrap'
+      width={{ base: '90vw', lg: '80vw' }}
       borderWidth='1px'
       borderRadius='lg'
       overflow='hidden'
@@ -103,11 +104,12 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete , serialNumber }) => {
               boxSize='250px'
               objectFit='contain'
               border='2px solid yellow'
+              m={3}
             />
           </Center>
 
           {/* Table Section */}
-          <Flex direction={{ base: 'column', lg: 'row' }} spacing={4} >
+          <Flex flexWrap='wrap' direction={{ base: 'column', lg: 'row' }} spacing={4} >
             <Box
               p={4}
               borderRadius='md'
@@ -183,7 +185,7 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete , serialNumber }) => {
       <Divider borderColor='gray.600' />
 
       <CardFooter>
-  <Flex width='100%' alignItems='center' gap='4'>
+  <Flex width='100%' direction={{ base: 'column', lg: 'row' }} alignItems='center' gap='4'>
     <Button
       variant='solid'
       colorScheme='yellow'
@@ -225,16 +227,15 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete , serialNumber }) => {
                 top='4'
                 right='4'
                 onClick={handleClose}
-                variant='outline'
                 colorScheme='red'
-                leftIcon={<FaTimes />}
+                
               >
-                Close
+                {<FaTimes />}
               </Button>
 
     </Card> )};
     </>
-  );
+  )
 };
 
 export default MemberCard;
