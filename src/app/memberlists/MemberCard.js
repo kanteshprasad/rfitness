@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Card,
@@ -15,6 +15,7 @@ import {
   Table,
   Thead,
   Tbody,
+  Text,
   Tr,
   Th,
   Td,
@@ -23,10 +24,49 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
 
-const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
+const MemberCard = ({ member, fileUrl, onEdit, onDelete , serialNumber }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
+
   return (
+   
+ 
+    <>
+
+      <Flex
+      bg='gray.700'
+      p={5}
+      borderRadius='25px'
+        direction='row'
+        alignItems='center'
+        mb='4'
+        cursor='pointer'
+        onClick={handleOpen}
+      >
+       
+       <Text color='yellow.300' marginRight='35px' fontWeight='bold'  >  {serialNumber} </Text>
+
+        <Image
+          src={fileUrl || '/default-profile-picture.png'}
+          alt='Profile'
+          boxSize='50px'
+          objectFit='cover'
+          borderRadius='full'
+          border='2px solid yellow'
+          mr='4'
+        />
+        <Text fontWeight='bold' color='yellow.300'>
+          {member.name}
+        </Text>
+      </Flex>
+
+      {isOpen && (
+   
+
     <Card
       width='80vw'
       borderWidth='1px'
@@ -36,6 +76,8 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
       bg='gray.800'
       color='white'
       mb='4'
+      zIndex='overlay'
+      position='absolute'
     >
       <CardBody>
         {/* Name and Image */}
@@ -52,7 +94,7 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
         </VStack>
         </Center>
 
-        <HStack spacing={4} mt='4'>
+        <Flex direction={{ base: 'column', lg: 'row' }} spacing={4} mt='4'>
           {/* Image Section */}
           <Center flex='1'>
             <Image
@@ -65,7 +107,7 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
           </Center>
 
           {/* Table Section */}
-          <HStack spacing={4} flex='3'>
+          <Flex direction={{ base: 'column', lg: 'row' }} spacing={4} >
             <Box
               p={4}
               borderRadius='md'
@@ -73,7 +115,7 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
               border='1px solid gray.600'
               flex='1'
             >
-              <Table variant='unstyled'>
+              <Table variant='simple'>
                 <Tbody>
                   <Tr>
                     <Th color='yellow.300'>Email:</Th>
@@ -107,7 +149,7 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
               border='1px solid gray.600'
               flex='1'
             >
-              <Table variant='unstyled'>
+              <Table variant='simple'>
                
                 <Tbody>
                   
@@ -134,8 +176,8 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
                 </Tbody>
               </Table>
             </Box>
-          </HStack>
-        </HStack>
+          </Flex>
+        </Flex>
       </CardBody>
 
       <Divider borderColor='gray.600' />
@@ -178,9 +220,27 @@ const MemberCard = ({ member, fileUrl, onEdit, onDelete }) => {
     </Button>
   </Flex>
 </CardFooter>
+<Button
+                position='absolute'
+                top='4'
+                right='4'
+                onClick={handleClose}
+                variant='outline'
+                colorScheme='red'
+                leftIcon={<FaTimes />}
+              >
+                Close
+              </Button>
 
-    </Card>
+    </Card> )};
+    </>
   );
 };
 
 export default MemberCard;
+
+
+
+
+
+

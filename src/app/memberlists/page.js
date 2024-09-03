@@ -13,6 +13,7 @@ import {
   useDisclosure,
   Text,
   VStack,
+  Grid,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -166,23 +167,32 @@ const MemberList = () => {
     <>
       <Navbar />
       <Container  maxW="container.xl" mt={8}>
+        
+      
+
         <VStack spacing={8} align="stretch">
           <HStack bg='gray.700' justify="center" p={4} borderRadius="md">
-            <Heading  color="yellow.300">Total Number of Members {members.length}</Heading>
+            <Heading  color="yellow.300" >Total Number of Members {members.length}</Heading>
           </HStack>
-          <Stack spacing={4}>
-            <HStack spacing={4} wrap="wrap">
-              {members.map((member) => (
+          <Grid
+        templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+        templateRows="repeat(auto-fill, 80px)"
+        gap={4} // Optional: Adds space between grid items
+        autoFlow="dense" // Optional: Adjusts the flow of grid items
+      >
+           
+              {members.map((member, index) => (
                 <MemberCard
                   key={member.$id}
                   member={member}
                   fileUrl={fileUrlMap.get(member.picture)} // Assuming picture is the field in member document
                   onEdit={handleEdit}
                   onDelete={handleDelete}
+                  serialNumber={index + 1}
                 />
               ))}
-            </HStack>
-          </Stack>
+           
+            </Grid>
           <EditMemberModal
             isOpen={isEditModalOpen}
             onClose={onCloseEditModal}
@@ -190,6 +200,8 @@ const MemberList = () => {
             onSave={handleSave}
           />
         </VStack>
+
+        
       </Container>
     </>
   );
