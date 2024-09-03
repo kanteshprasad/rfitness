@@ -3,13 +3,25 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Client, Account } from 'appwrite';
-import styles from './Login.module.css'; // Import CSS module for styling
+import { 
+  Box, 
+  Button, 
+  FormControl, 
+  FormLabel, 
+  Input, 
+  Stack, 
+  Text, 
+  useToast, 
+  Container 
+} from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 
+
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 // Initialize Appwrite client and account here
 const client = new Client()
-.setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('66b0747b001cea147dd4');
+  .setEndpoint('https://cloud.appwrite.io/v1')
+  .setProject(projectId);
 
 const account = new Account(client);
 
@@ -18,57 +30,71 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+  const toast = useToast();
 
-  console.log('Project ID:', process.env.NEXT_PUBLIC_PROJECT_ID); // Debugging line
-  
-
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    account.createEmailPasswordSession(email, password)
-      .then((response) => {
-        console.log(response); // Success
-        router.push('/dashboard');
-      })
-      .catch((err) => {
-        console.error('Login error:', err); // Log detailed error
-        setError('Login failed. Please check your credentials.');
-        console.log(email, password, process.env.NEXT_PUBLIC_PROJECT_ID);
+    try {
+      const response = await account.createEmailPasswordSession(email, password);
+      console.log(response); // Success
+      router.push('/dashboard');
+    } catch (err) {
+      console.error('Login error:', err); // Log detailed error
+      setError('Login failed. Please check your credentials.');
+      toast({
+        title: 'Login failed',
+        description: 'Please check your credentials.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
       });
+      console.log(email, password, process.env.NEXT_PUBLIC_PROJECT_ID);
+    }
   };
 
   return (
     <>
       <Navbar />
-      <div className={styles.container}>
-        <h1 className={styles.title}>Login</h1>
-        <form onSubmit={handleLogin} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label htmlFor="email" className={styles.label}>Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <label htmlFor="password" className={styles.label}>Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-          <button type="submit" className={styles.button}>Login</button>
-          {error && <p className={styles.error}>{error}</p>}
-        </form>
-      </div>
+      <Container maxW="md" mt={8}>
+        <Box p={8} shadow="md" borderWidth="1px" borderRadius="md">
+          <Text fontSize="2xl" mb={4} textAlign="center">
+            Login
+          </Text>
+          <form onSubmit={handleLogin}>
+            <Stack spacing={4}>
+              <FormControl id="email" isRequired>
+                <FormLabel>Email:</FormLabel>
+                <Input 
+                  type="email" 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                />
+              </FormControl>
+              <FormControl id="password" isRequired>
+                <FormLabel>Password:</FormLabel>
+                <Input 
+                  type="password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                />
+              </FormControl>
+              <Button 
+                type="submit" 
+                colorScheme="blue"
+                mt={4}
+              >
+                Login
+              </Button>
+              {error && (
+                <Text color="red.500" textAlign="center">
+                  {error}
+                </Text>
+              )}
+            </Stack>
+          </form>
+        </Box>
+      </Container>
     </>
   );
 }

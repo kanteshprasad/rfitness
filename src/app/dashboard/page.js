@@ -4,14 +4,9 @@ import Navbar from '../components/Navbar';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Client, Account } from 'appwrite';
-import CreateMember from './CreateMember';
-import MemberList from './MemberList';
-
-
-
+import { Button, Stack } from '@chakra-ui/react'; // Import Chakra UI Button and Stack components
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
-
 
 // Initialize Appwrite client and account here
 const client = new Client()
@@ -48,21 +43,21 @@ export default function Dashboard() {
     <div>
       <Navbar />
 
-      <div style={{display:"flex", justifyContent:"center" , flexDirection:"column", marginTop:"15px", marginBottom:"15px" , backdropFilter:"blur(25px)" , alignItems:"center"}} >
-      <h5>Welcome to the Dashboard, {user.name}</h5>
-      <p>This is a protected page.</p>
+      <div style={{display:"flex", justifyContent:"center", flexDirection:"column", marginTop:"15px", marginBottom:"15px", backdropFilter:"blur(25px)", alignItems:"center"}} >
+        <h5>Welcome to the Dashboard, {user.name}</h5>
+        <p>This is a protected page.</p>
       </div>
 
-      <div className='seperator'>
-  <h2> Add a new Member </h2>
-</div>
-
-      <CreateMember />
-
-      <div className='seperator'>
-  <h2> Members List </h2>
-</div>
-      <MemberList />
+      <Stack spacing={4} align="center" mb={8}>
+        <Button onClick={() => router.push('/createmember')} colorScheme="teal">
+          Click Here To Add new Member
+        </Button>
+        <Button onClick={() => router.push('/memberlists')} colorScheme="teal">
+         Click Here to   View Members List
+        </Button>
+        
+      </Stack>
+     
     </div>
   );
 }

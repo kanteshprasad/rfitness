@@ -119,13 +119,14 @@ body{
 
 
 .seperator{
-  width: 100%;
+  width: 70%;
   display: flex;
   background-color: #e0a800;
   border-radius: 25px;
   box-shadow: 5px 5px solid grey;
-  height: 75px;
+  height: 55px;
   margin-top: 25px;
+  margin-left: 12.5%;
   margin-bottom: 25px;
   justify-content: center;
   align-items: center;
